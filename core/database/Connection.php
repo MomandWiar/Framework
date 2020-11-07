@@ -2,6 +2,11 @@
 
 class Connection
 {
+    /**
+     * Create a new PDO connection.
+     *
+     * @param array $config
+     */
     public static function make($config)
     {
         try {

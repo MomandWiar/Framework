@@ -1,7 +1,9 @@
 <?php
 
-$query = require 'bootstrap.php';
+require 'vendor/autoload.php';
+require_once 'core/bootstrap.php';
 
-$task = $query->selectAll('tasks');
+use Wiar\Core\{Router, Request};
 
-require 'index.view.php';
+Router::load('app/routes.php')
+	->direct(Request::uri(), Request::method());
