@@ -2,31 +2,31 @@
 
 namespace Wiar\Controllers;
 
-use App\Core\App;
+use Wiar\Core\App;
 
 class PagesController
 {
     /**
-     * Show the home page.
-     */
+    * Show the home page.
+    */
 	public function getHome()
 	{
-		$task = App::get('database')->selectAll('posts');
+		$tasks = App::get('database')->selectAll('tasks');
 
 		return view('index', compact('tasks'));
 	}
 
     /**
-     * Show the about page.
-     */
+    * Show the about page.
+    */
 	public function getAbout()
 	{
 		return view('about');
 	}
 
     /**
-     * Show the contact page.
-     */
+    * Show the contact page.
+    */
 	public function getContact()
 	{
 		return view('contact');

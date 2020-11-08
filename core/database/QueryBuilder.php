@@ -1,5 +1,9 @@
 <?php
 
+namespace Wiar\Core\Database;
+
+use PDO;
+
 class QueryBuilder
 {
     /**

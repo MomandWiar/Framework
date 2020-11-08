@@ -7,8 +7,8 @@ use App\Core\App;
 class NameController
 {
     /**
-     * Store a new user in the database.
-     */
+    * Store a new user in the database.
+    */
 	public function addName()
 	{
 		App::get('database')->insert('posts', [

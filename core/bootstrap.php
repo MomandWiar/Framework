@@ -1,6 +1,7 @@
 <?php
 
-use App\Core\App;
+use Wiar\Core\App;
+use Wiar\Core\Database\{QueryBuilder, Connection};
 
 App::bind('config', require 'config.php');
 

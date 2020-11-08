@@ -13,11 +13,9 @@
 	</ul>
 
     <ul>
-	    <?php
-	        foreach($task as $t) {
-	        	echo "<li>$t->name</li>";
-	        }
-	    ?>
+	    <?php foreach($tasks as $task) : ?>
+	        <li><?= $task->name; ?></li>
+	    <?php endforeach; ?>
     </ul>
 
     <form method='POST' action="/add-name">

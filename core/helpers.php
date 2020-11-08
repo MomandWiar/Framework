@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Require a view.
- *
- * @param  string $name
- * @param  array  $data
- */
+* Require a view.
+*
+* @param  string $name
+* @param  array  $data
+*/
 function view($name, $data = [])
 {
 	extract($data);
@@ -14,20 +14,20 @@ function view($name, $data = [])
 }
 
 /**
- * Redirect to a new page.
- *
- * @param  string $path
- */
+* Redirect to a new page.
+*
+* @param  string $path
+*/
 function redirect($path)
 {
 	header("Location: /{$path}");
 }
 
 /**
- * Die and dump an expression.
- *
- * @param  string $expression
- */
+* Die and dump an expression.
+*
+* @param  string $expression
+*/
 function dd($expression)
 {
 	die(var_dump($expression));
