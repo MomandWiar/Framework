@@ -14,8 +14,6 @@
 	<button type='submit'>Submit</button>
 </form>
 
-<?= $test ?>
-
 <br>
 
 <?php require 'partials/footer.php' ?>
