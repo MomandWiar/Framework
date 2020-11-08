@@ -1,26 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Contact</title>
-</head>
-<body>
-	<h1>Home</h1>
+<?php require 'partials/head.php' ?>
 
-	<ul>
-		<li><a href="/">Home</a></li>
-		<li><a href="/about">About</a></li>
-		<li><a href="/contact">Contact</a></li>
-	</ul>
+<h1>Home</h1>
 
-    <ul>
-	    <?php foreach($tasks as $task) : ?>
-	        <li><?= $task->name; ?></li>
-	    <?php endforeach; ?>
-    </ul>
+<ul>
+    <?php foreach($tasks as $task) : ?>
+        <li><?= $task->name; ?></li>
+    <?php endforeach; ?>
+</ul>
 
-    <form method='POST' action="/add-name">
-    	<input name='name'></input>
-    	<button type='submit'>Submit</button>
-    </form>
-</body>
-</html>
+
+<form method='POST' action="/add-name">
+	<input name='name'></input>
+	<button type='submit'>Submit</button>
+</form>
+
+<?= $test ?>
+
+<br>
+
+<?php require 'partials/footer.php' ?>

@@ -2,21 +2,21 @@
 
 namespace Wiar\Controllers;
 
-use App\Core\App;
+use Wiar\Core\App;
 
 class NameController
 {
     /**
-    * Store a new user in the database.
-    */
+     * Store a new user in the database.
+     */
 	public function addName()
 	{
-		App::get('database')->insert('posts', [
+		App::get('database')->insert('tasks', [
 			'name' => $_POST['name']
 		]);
 
-		App::get('database')->selectAll('posts');
+		$test = 'hai';
 
-		return redirect('index');
+		return redirect('', compact('test'));
 	}
 }

@@ -5,20 +5,21 @@ namespace Wiar\Core;
 class Router
 {
     /**
-    * All registered routes.
-    *
-    * @var array
-    */
+     * All registered routes.
+     *
+     * @var array
+     */
 	protected $routes = [
 		'GET' => [],
 		'POST' => []
 	];
 
     /**
-    * Load a user's routes file.
-    *
-    * @param string $file
-    */
+     * Load a user's routes file.
+     *
+     * @param string $file
+     * @return static
+     */
 	public static function load($file)
 	{
 		$router = new static;
@@ -29,33 +30,34 @@ class Router
 	}
 
     /**
-    * Register a GET route.
-    *
-    * @param string $uri
-    * @param string $controller
-    */
+     * Register a GET route.
+     *
+     * @param string $uri
+     * @param string $controller
+     */
 	public function get($uri, $controller)
 	{
 		$this->routes['GET'][$uri] = $controller;
 	}
 
     /**
-    * Register a POST route.
-    *
-    * @param string $uri
-    * @param string $controller
-    */
+     * Register a POST route.
+     *
+     * @param string $uri
+     * @param string $controller
+     */
 	public function post($uri, $controller)
 	{
 		$this->routes['POST'][$uri] = $controller;
 	}
 
     /**
-    * Load the requested URI's associated controller method.
-    *
-    * @param string $uri
-    * @param string $requestType
-    */
+     * Load the requested URI's associated controller method.
+     *
+     * @param string $uri
+     * @param string $requestType
+     * @return mixed
+     */
 	public function direct($uri, $requestType)
 	{
 		if (array_key_exists($uri, $this->routes[$requestType])) {
@@ -68,11 +70,12 @@ class Router
 	}
 
     /**
-    * Load and call the relevant controller action.
-    *
-    * @param string $controller
-    * @param string $action
-    */
+     * Load and call the relevant controller action.
+     *
+     * @param string $controller
+     * @param string $action
+     * @return mixed
+     */
 	protected function callAction($controller, $action)
 	{
 		$controller = "Wiar\\Controllers\\{$controller}";
