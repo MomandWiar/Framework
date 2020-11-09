@@ -46,11 +46,14 @@ class QueryBuilder
      * @param  string $table
      * @return array
      */
-	public function select($table, $parameters = [], $where = [])
+	public function select($table, $select = [], $where = [])
 	{
-		$parameters = $this->checkParameters($parameters);
+		$parameters = $this->formatSelect($select);
 
-		$sql = "SELECT {$parameters} FROM {$table}";
+        $sql = sprintf(
+            'SELECT %s FROM %s',
+            $parameters, $table
+        );
 
 		$sql .= $this->checkWhere($where);
 
@@ -63,7 +66,7 @@ class QueryBuilder
      * @param  string $table
      * @param  array  $parameters
      */
-	public function insert($table, $parameters = [])
+	public function insert($table, $parameters)
 	{
 		$column = implode(', ', array_keys($parameters));
 		$value = ':' . implode(', :', array_keys($parameters));
@@ -87,17 +90,14 @@ class QueryBuilder
 	{
 		$parameters = array_merge($set, $where);
 
-		$set = $this->createUpdateClause(', ', $set);
-		$where = $this->createUpdateClause(' AND ', $where);
+        $set = $this->formatParameters(', ', $where);
 
         $sql = sprintf(
             "UPDATE %s SET %s",
             $table, $set
         );
 
-        if (! empty($where)) {
-        	$sql .= " WHERE {$where}";
-        }
+        $sql .= $this->checkWhere($where);
 
 		$this->execute($sql, $parameters);
 	}
@@ -111,15 +111,11 @@ class QueryBuilder
      */
 	public function delete($table, $where = [])
 	{
-		$where = $this->createWhereClaue($where);
+	   $sql = "DELETE FROM {$table}";
 
-		$sql = "DELETE FROM {$table}";
+	   $sql .= $this->checkWhere($where);
 
-		if (! empty($where)) {
-			$sql .= " WHERE {$where}";
-		}
-
-		$this->execute($sql);
+	   $this->execute($sql, $where);
 	}
 
     /**
@@ -129,7 +125,7 @@ class QueryBuilder
      */
 	public function fetch()
 	{
-	    $this->statement->execute();
+        $this->statement->execute();
 
 	    return $this->statement->fetch(PDO::FETCH_OBJ);
 	}
@@ -147,12 +143,28 @@ class QueryBuilder
 	}
 
     /**
-     * Check parameters array.
+     * Check where array.
+     *
+     * @param  array $where
+     * @return mixed
+     */
+    private function checkWhere($where)
+    {
+        if (! empty($where)) {
+            $where = $this->formatParameters(' AND ', $where);
+
+            return " WHERE {$where}";
+        }
+        return null;
+    }
+
+    /**
+     * Format select.
      *
      * @param  array $parameter
      * @return mixed
      */
-	private function checkParameters($parameters)
+	private function formatSelect($parameters)
 	{
 		$parameters = implode(', ', $parameters);
 
@@ -164,46 +176,12 @@ class QueryBuilder
 	}
 
     /**
-     * Check where array.
-     *
-     * @param  array $where
-     * @return mixed
-     */
-	private function checkWhere($where)
-	{
-		if (! empty($where)) {
-			$where = $this->createWhereClaue($where);
-
-	    	return " WHERE {$where}";
-		}
-		return;
-	}
-
-    /**
-     * Create where claus.
+     * Format parameters.
      *
      * @param  array $parameter
      * @return array
      */
-	private function createWhereClaue($parameter)
-	{
-		return implode(' AND ', array_map(
-                function($key, $value) {
-                    return "{$key} = '{$value}'";
-                },
-                array_keys($parameter),
-                array_values($parameter)
-            )
-		);
-	}
-
-	/**
-     * Create update claus.
-     *
-     * @param  array $parameter
-     * @return array
-     */
-	private function createUpdateClause($separator, $parameter)
+	private function formatParameters($separator, $parameter)
 	{
 		return implode($separator, array_map(
                 function($key, $value) {
@@ -212,7 +190,7 @@ class QueryBuilder
                 array_keys($parameter),
                 array_keys($parameter)
             )
-        );
+		);
 	}
 
 	/**

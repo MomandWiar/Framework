@@ -23,6 +23,8 @@ class PagesController
      */
 	public function getAbout()
 	{
+        App::get('database')->update('tasks',['name' => 'Peter'],['id' => 35]);
+
 		return view('about');
 	}
 
@@ -31,6 +33,8 @@ class PagesController
      */
     public function getAboutCulture()
     {
+        App::get('database')->delete('tasks',['id' => 36]);
+
         return view('about-culture');
     }
 
